@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>
+			DoublePendilum
+		</title>
+	</head>
+	<body>
+		<link href="style.css" rel="stylesheet" type="text/css"/>
+
+		<p>Mass of the first ball:
+		<input type="range" min="1" max="30" value="15" class="slider" id="m1_S">
+		Mass of the second ball:
+		<input type="range" min="1" max="30" value="15" class="slider" id="m2_S">
+		Length of the first staff:
+		<input type="range" min="1" max="250" value="125" class="slider" id="r1_S">
+		Length of the second staff:
+		<input type="range" min="1" max="250" value="125" class="slider" id="r2_S">
+		<button onclick="change()">Go</button>
+
+		<script src="libraries/p5.js" type="text/javascript"></script>
+    	<script src="libraries/p5.dom.js" type="text/javascript"></script>
+    	<script src="libraries/p5.sound.js" type="text/javascript"></script>
+
+    	<script src="sketch.js" type="text/javascript"></script>
+    	
+      	<style> body {padding: 20px; margin: 0;} canvas {vertical-align: top;} </style>
+
+    	
+	</body>
+</html> 

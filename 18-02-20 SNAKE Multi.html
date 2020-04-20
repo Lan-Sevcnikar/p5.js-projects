@@ -1,0 +1,258 @@
+<html>
+
+	<canvas id ="gameCanvas" width="600" height="600"> </canvas>
+<title>
+	SNAKE, theGame
+</title>
+
+<script>
+	canvas = document.getElementById('gameCanvas');
+
+	var snakeLength = 12;
+	var snakeSize = 20;
+
+	var snakePartsX = [];
+	var snakePartsY = [];
+	var snake2X = 0;
+	var snake2Y = 0;
+	var directionX = 1;
+	var directionY = 0;
+
+	var snake2PartsX = [];
+	var snake2PartsY = [];
+	var snakeX = 0;
+	var snakeY = canvas.height-snakeSize;
+	var direction2X = 1;
+	var direction2Y = 0;
+	
+	var movedYet = false;
+	var movedYet2 = false;
+
+	var appleX = snakeSize * Math.floor(Math.random() * canvas.width / snakeSize);
+	var appleY = snakeSize * Math.floor(Math.random() * canvas.height / snakeSize);
+
+	var winState = false;
+	var topScore = 0;
+	var score;
+	var snakeScore = 0;
+	var snake2Score = 0; 
+
+	
+	window.onload = function() {
+		
+		canvasContext = canvas.getContext('2d');
+		document.addEventListener('keydown', keyPush);
+
+		var framesPS = 20;
+		
+		setInterval(function(){
+				score = snakeLength - 4;
+				topScore = score > topScore ? score : topScore;
+				moveAll();
+				drawAll();
+				movedYet = false;
+				movedYet2 = false;
+		}, 1000/framesPS);
+	}
+
+	function keyPush(evt){
+		if(movedYet == false){
+			switch(evt.keyCode){
+				case 37:
+					if (directionX != 1 && directionY != 0){
+						directionX = -1;
+						directionY = 0;
+						movedYet = true;
+					}break;
+				case 38:
+					if (directionX != 0 && directionY != 1){
+						directionX = 0;
+						directionY = -1;
+						movedYet = true;						
+					}break;
+				case 39:
+					if (directionX != -1 && directionY != 0){
+						directionX = 1;
+						directionY = 0;		
+						movedYet = true;
+					}break;
+				case 12:
+					if (directionX != 0 && directionY != -1){
+						directionX = 0;
+						directionY = 1;	
+						movedYet = true;						
+					}break;
+			}
+		}if(movedYet2 == false){
+			switch(evt.keyCode){
+				case 65:
+					if (direction2X != 1 && direction2Y != 0){
+						direction2X = -1;
+						direction2Y = 0;
+						movedYet2 = true;
+					}break;
+				case 87:
+					if (direction2X != 0 && direction2Y != 1){
+						direction2X = 0;
+						direction2Y = -1;
+						movedYet2 = true;						
+					}break;
+				case 68:
+					if (direction2X != -1 && direction2Y != 0){
+						direction2X = 1;
+						direction2Y = 0;		
+						movedYet2 = true;
+					}break;
+				case 83:
+					if (direction2X != 0 && direction2Y != -1){
+						direction2X = 0;
+						direction2Y = 1;	
+						movedYet2 = true;						
+					}break;
+			}
+		}if(evt.keyCode == 32){
+			snake2X = 0;
+			snake2Y = 0;
+			directionX = 1;
+			directionY = 0;
+			appleX = snakeSize * Math.floor(Math.random() * canvas.width / snakeSize);
+			appleY = snakeSize * Math.floor(Math.random() * canvas.height / snakeSize);
+			snakeLength = 52;
+			winState = false;
+			snakeX = 0;
+			snakeY = canvas.height-snakeSize;
+			direction2X = 1;
+			direction2Y = 0;
+		}
+	}
+	
+	function checkColision(){
+		for (var i = 0; i < snakeLength; i++){
+			if (snakeX == snakePartsX[i] && snakeY == snakePartsY[i]){
+				winState = true;
+				snake2Score++;
+			}
+			if (snakeX == snake2PartsX[i] && snakeY == snake2PartsY[i]){
+				winState = true;
+				snake2Score++;
+			}
+			if(snakePartsX[i] == appleX && snakePartsY[i] == appleY){
+				appleX = snakeSize * Math.floor(Math.random() * canvas.width / snakeSize);
+				appleY = snakeSize * Math.floor(Math.random() * canvas.height / snakeSize);
+			}
+		}
+		for (var i = 0; i < snakeLength; i++){
+			if (snake2X == snakePartsX[i] && snake2Y == snakePartsY[i]){
+				winState = true;
+				snakeScore++;
+			}
+			if (snake2X == snake2PartsX[i] && snake2Y == snake2PartsY[i]){
+				winState = true;
+				snakeScore++;
+			}
+			if(snake2PartsX[i] == appleX && snake2PartsY[i] == appleY){
+				appleX = snakeSize * Math.floor(Math.random() * canvas.width / snakeSize);
+				appleY = snakeSize * Math.floor(Math.random() * canvas.height / snakeSize);
+			}
+		}
+		if (snakeX > canvas.width - snakeSize){
+			winState = true;
+			snake2Score++;
+		}if (snakeY > canvas.height - snakeSize){
+			winState = true;
+			snake2Score++;
+		}if (snakeX < 0){
+			winState = true;
+			snake2Score++;
+		}if (snakeY < 0){
+			winState = true;
+			snake2Score++;
+		}
+		if (snake2X > canvas.width - snakeSize){
+			winState = true;
+			snakeScore++;
+		}if (snake2Y > canvas.height - snakeSize){
+			winState = true;
+			snakeScore++;
+		}if (snake2X < 0){
+			winState = true;
+			snakeScore++;
+		}if (snake2Y < 0){
+			winState = true;
+			snakeScore++;
+		}
+		if (snakeX === appleX && snakeY === appleY){
+			snakeLength += 1;
+			snakeScore++;
+			appleX = snakeSize * Math.floor(Math.random() * canvas.width / snakeSize);
+			appleY = snakeSize * Math.floor(Math.random() * canvas.height / snakeSize);
+		}
+		if (snake2X === appleX && snake2Y === appleY){
+			snakeLength += 1;
+			snake2Score++;
+			appleX = snakeSize * Math.floor(Math.random() * canvas.width / snakeSize);
+			appleY = snakeSize * Math.floor(Math.random() * canvas.height / snakeSize);
+		}
+	}
+	
+	function drawAll(){
+		if (winState){
+			drawREC(0, 0, canvas.width, canvas.height, 'LimeGreen');
+			canvasContext.fillStyle = 'black';
+			canvasContext.fillText("\'Space\' to play again", canvas.width/2 - 40, canvas.height/2 - 40);
+		}else{
+			drawREC(0, 0, canvas.width, canvas.height, 'Chartreuse');
+			for (var i = 0; i < snakeLength; i++){
+				drawREC(snakePartsX[i], snakePartsY[i], snakeSize, snakeSize, 'green');
+				drawREC(snake2PartsX[i], snake2PartsY[i], snakeSize, snakeSize, 'green');
+			}
+			drawREC(appleX, appleY, snakeSize, snakeSize, 'red');
+		}
+		canvasContext.fillStyle = 'black';
+		canvasContext.fillText("Score Snake 2:", canvas.width-125, 40);
+		canvasContext.fillText(snake2Score, canvas.width-65, 60);
+		canvasContext.fillText("Score Snake 1:", 40, 40);
+		canvasContext.fillText(snakeScore, 40, 60);
+	}
+	
+	function moveAll(){
+		if(!winState){
+			snakeX += snakeSize * directionX;
+			snakeY += snakeSize * directionY;
+			snake2X += snakeSize * direction2X;
+			snake2Y += snakeSize * direction2Y;
+			checkColision();
+			snakePartsX.push(snakeX);
+			snakePartsY.push(snakeY);
+			snake2PartsX.push(snake2X);
+			snake2PartsY.push(snake2Y);
+			while(snakePartsX.length > snakeLength){
+				snakePartsX.shift();
+				snakePartsY.shift();
+			}
+			while(snake2PartsX.length > snakeLength){
+				snake2PartsX.shift();
+				snake2PartsY.shift();
+			}			
+		}else{
+			while(snakePartsX.length > 0){
+				snakePartsX.shift();
+				snakePartsY.shift();
+			}
+			while(snake2PartsX.length > 0){
+				snake2PartsX.shift();
+				snake2PartsY.shift();
+			}			
+		}
+	}
+	
+	function drawREC(X, Y, width, height, colour){
+		canvasContext.fillStyle = colour;
+		canvasContext.fillRect(X,Y,width,height);
+	}
+	
+	
+	
+</script>
+
+</html>

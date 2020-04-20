@@ -1,0 +1,170 @@
+<html>
+
+	<canvas id ="gameCanvas" width="600" height="600"> </canvas>
+<title>
+	SNAKE, theGame
+</title>
+
+<script>
+	var snakeLength = 1;
+	var snakeSize = 20;
+	var snakePartsX = [];
+	var snakePartsY = [];
+	var snakeX = snakeSize * 3;
+	var snakeY = 300;
+	var directionX = 1;
+	var directionY = 0;
+	
+	var movedYet = false;
+	
+	var appleX = snakeSize;
+	var appleY = 300;
+	
+	var winState = false;
+	var topScore = 0;
+	var score;
+	
+	window.onload = function() {
+		canvas = document.getElementById('gameCanvas');
+		canvasContext = canvas.getContext('2d');
+		document.addEventListener('keydown', keyPush);
+		canvas.addEventListener('mousedown', mouseClick);		
+		snakeLength = 4;
+		
+		var framesPS = 16;
+		
+		setInterval(function(){
+				score = snakeLength - 4;
+				topScore = score > topScore ? score : topScore;
+				moveAll();
+				drawAll();
+				movedYet = false;
+		}, 1000/framesPS);
+	}
+	
+	function mouseClick(evt){
+		if (winState){
+			snakeX = snakeSize * 3;
+			snakeY = 300;
+			directionX = 1;
+			directionY = 0;
+			appleX = snakeSize;
+			appleY = 300;
+			snakeLength = 4;
+			
+		}
+		winState = false;
+	}
+	
+	function keyPush(evt){
+		if(movedYet == false){
+			switch(evt.keyCode){
+				case 37:
+					if (directionX != 1 && directionY != 0){
+						directionX = -1;
+						directionY = 0;
+						movedYet = true;
+					}break;
+				case 38:
+					if (directionX != 0 && directionY != 1){
+						directionX = 0;
+						directionY = -1;
+						movedYet = true;						
+					}break;
+				case 39:
+					if (directionX != -1 && directionY != 0){
+						directionX = 1;
+						directionY = 0;		
+						movedYet = true;
+					}break;
+				case 40:
+					if (directionX != 0 && directionY != -1){
+						directionX = 0;
+						directionY = 1;	
+						movedYet = true;						
+					}break;
+			}
+		}if(evt.keyCode == 32){
+			snakeX = snakeSize * 3;
+			snakeY = 300;
+			directionX = 1;
+			directionY = 0;
+			appleX = snakeSize;
+			appleY = 300;
+			snakeLength = 4;
+			winState = false;
+		}
+	}
+	
+	function checkColision(){
+		for (var i = 0; i < snakeLength; i++){
+			if (snakeX == snakePartsX[i] && snakeY == snakePartsY[i]){
+				winState = true;
+			}
+			if(snakePartsX[i] == appleX && snakePartsY[i] == appleY){
+				snakeLength += 1;
+				appleX = snakeSize * Math.floor(Math.random() * canvas.width / snakeSize);
+				appleY = snakeSize * Math.floor(Math.random() * canvas.height / snakeSize);
+				console.log("Magic");
+			}
+		}
+		if (snakeX > canvas.width - snakeSize){
+			winState = true;
+		}if (snakeY > canvas.height - snakeSize){
+			winState = true;
+		}if (snakeX < 0){
+			winState = true;
+		}if (snakeY < 0){
+			winState = true;
+		}
+		if (snakeX === appleX && snakeY === appleY){
+			snakeLength += 1;
+			appleX = snakeSize * Math.floor(Math.random() * canvas.width / snakeSize);
+			appleY = snakeSize * Math.floor(Math.random() * canvas.height / snakeSize);
+		}
+	}
+	
+	function drawAll(){
+		if (winState){
+			drawREC(0, 0, canvas.width, canvas.height, 'LimeGreen');
+			canvasContext.fillStyle = 'black';
+			canvasContext.fillText("Click to play again", canvas.width/2 - 40, canvas.height/2 - 40);
+		}else{
+			drawREC(0, 0, canvas.width, canvas.height, 'Chartreuse');
+			for (var i = 0; i < snakeLength; i++){
+				drawREC(snakePartsX[i], snakePartsY[i], snakeSize, snakeSize, 'green');
+			}
+			drawREC(appleX, appleY, snakeSize, snakeSize, 'red');
+		}
+		canvasContext.fillStyle = 'black';
+		canvasContext.fillText("TopScore:", canvas.width-85, 40);
+		canvasContext.fillText(topScore, canvas.width-85, 60);
+		canvasContext.fillText("Score:", 40, 40);
+		canvasContext.fillText(score, 40, 60);
+	}
+	
+	function moveAll(){
+		if(!winState){
+			snakeX += snakeSize * directionX;
+			snakeY += snakeSize * directionY;
+			checkColision();
+			snakePartsX.push(snakeX);
+			snakePartsY.push(snakeY);
+			while(snakePartsX.length > snakeLength){
+				snakePartsX.shift();
+				snakePartsY.shift();
+			}
+						
+		}
+	}
+	
+	function drawREC(X, Y, width, height, colour){
+		canvasContext.fillStyle = colour;
+		canvasContext.fillRect(X,Y,width,height);
+	}
+	
+	
+	
+</script>
+
+</html>

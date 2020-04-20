@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<h1 id="demo">0</h1>
+		<p>Seconds have elapsed</p>
+
+		<button onclick="myFunction()"> Button </button>
+
+		<h2 id="demo2">TIME</h2>
+
+		<script>
+
+			var i = 0;
+			setInterval(function(){i ++; document.getElementById("demo").innerHTML = i;}, 1000);
+			document.write("hello world");		//will write something. On fully loaded website, will erase all
+			window.alert("stuff");				//makes a pop-up window alreting
+			console.log("Fuck y'all"); 		    //makes a console log
+
+			function myFunction(){
+				document.getElementById("demo2").innerHTML = Date(); //gets an element with an ID of demo2 and sets it to current time
+			}
+
+			var string = "hello world's";	//You can use either and even use the other type inside without it effecting it 
+			var string = 'hello "world"';	//If very much needed, you can also use '\', to make sure its not misunderstanding it
+			var size = string.length; 		//This funtion returns the length of the thing
+
+		</script>
+	</body>
+</html> 

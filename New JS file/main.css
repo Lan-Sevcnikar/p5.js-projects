@@ -1,0 +1,30 @@
+body{
+    position: fixed;
+    padding: 0px;
+    margin: 0px;
+    vertical-align: top;
+}
+
+canvas{
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    padding: 0px;
+    margin: 0px;
+    vertical-align: top;
+}
+
+h1{
+    background: gray;
+    color: white;
+    text-align: center;
+    font-family: monospace;
+}
+
+div{
+    position:absolute;
+    z-index:0;
+    left:12px;
+    top:10px;
+}

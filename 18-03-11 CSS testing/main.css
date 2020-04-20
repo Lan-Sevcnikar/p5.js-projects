@@ -1,0 +1,31 @@
+body {
+	background: grey;
+	font-family: arial;
+}
+h1, h4, li, p{
+	color: #E1F5FE;
+}
+
+h1:hover{
+	color: gold;
+}
+
+a {
+	color: white; 
+}
+
+p {
+	color: black;
+	background: darkgrey;
+	padding: 15px 55px 10px 55px;
+}
+
+.secondary {
+	color: black; 
+	background: lightgray;
+	padding: 100px;
+}
+
+#navigaton {
+	color: red;
+}
