@@ -3,16 +3,14 @@ class Player{
 		this.x = x1;
 		this.y = y1;
 		this.a = a;
-		this.v = 3;
-		this.rs = 0.04;
+		this.v = 1;
+		this.rs = 2;
 		this.rays = [];
 		this.gen_rays();
-		this.size = 35;
+		this.size = 10;
 	}
 	update(){
 		let w = new Vector(0,0);
-		if(keyIsDown(LEFT_ARROW))  w.x -= 1;
-		if(keyIsDown(RIGHT_ARROW)) w.x += 1;
 		if(keyIsDown(UP_ARROW))    w.y -= 1;
 		if(keyIsDown(DOWN_ARROW))  w.y += 1; 
 		w.normalize();
@@ -47,12 +45,12 @@ class Player{
 			}
 		}
 		let da = 0;
-		if(keyIsDown(65)) da -= this.rs;
-		if(keyIsDown(68)) da += this.rs;
-		this.a += da;
+		if(keyIsDown(LEFT_ARROW)) da -= this.rs;
+		if(keyIsDown(RIGHT_ARROW)) da += this.rs;
+		this.a += da*deltaTime/1000;
 		this.fixA();
 		this.rays.forEach(ray => {
-			ray.a += da;
+			ray.a += da*deltaTime/1000;
 			ray.fixA();
 		});
 	}
@@ -62,24 +60,35 @@ class Player{
 		stroke(colour_lines);
 		ellipse(this.x,this.y,this.size*2);
 		stroke(colour_rays);
-		this.rays.forEach(ray => {
-			dists.push(ray.simulate());
-		});
+		// this.rays.forEach(ray => {
+		// 	dists.push(ray.simulate());
+		// });
 		return dists;
 	}
+	// this code simulates aplane and then lines through it
+	// gen_rays(){
+	// 	let maxDist = tan(FOV/2);
+	// 	for (let i = 1; i < resolution/2; i++) {
+	// 		let x = maxDist*2*i/resolution;
+	// 		let a = (-atan(x)+2*PI)%(2*PI);
+	// 		this.rays.push(new Ray(this.x,this.y,a,a-this.a));
+	// 	}
+	// 	this.rays.reverse();
+	// 	this.rays.push(new Ray(this.x,this.y,this.a,0));
+	// 	for (let i = 1; i < resolution/2; i++) {
+	// 		let x = maxDist*2*i/resolution;
+	// 		let a = (atan(x)+2*PI)%(2*PI);
+	// 		this.rays.push(new Ray(this.x,this.y,a,a+this.a));
+	// 	}
+	// }
+	// this code simulates lines by equal angle thingies
 	gen_rays(){
-		let maxDist = tan(FOV/2);
-		for (let i = 1; i < resolution/2; i++) {
-			let x = maxDist*2*i/resolution;
-			let a = (-atan(x)+2*PI)%(2*PI);
-			this.rays.push(new Ray(this.x,this.y,a,a-this.a));
-		}
-		this.rays.reverse();
-		this.rays.push(new Ray(this.x,this.y,this.a,0));
-		for (let i = 1; i < resolution/2; i++) {
-			let x = maxDist*2*i/resolution;
-			let a = (atan(x)+2*PI)%(2*PI);
-			this.rays.push(new Ray(this.x,this.y,a,a+this.a));
+		const fov2 = FOV/2;
+		const delta = FOV/resolution;
+		for (let i = 0; i < resolution; i++) {
+			const angle = i * delta-FOV/2;
+			this.rays.push(new Ray(this.x,this.y,angle,0));
+			this.rays[i].fixA();
 		}
 	}
 	fixA(){

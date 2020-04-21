@@ -4,11 +4,11 @@ let colour_rays;
 
 const screenWidth = 2400;
 const screenHeight = 900;
-const resolution = 300;
-const FOV = radians(60);
+const resolution = 200;
+const FOV = radianss(60);
 const maxDist = screenWidth/3;
 
-function radians(a){
+function radianss(a){
 	return (a* 2*3.1415 / 360);
 }
 
