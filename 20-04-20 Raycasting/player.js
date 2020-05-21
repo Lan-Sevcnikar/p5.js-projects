@@ -7,7 +7,7 @@ class Player{
 		this.rs = 2;
 		this.rays = [];
 		this.gen_rays();
-		this.size = 10;
+		this.size = 5;
 	}
 	update(){
 		let w = new Vector(0,0);

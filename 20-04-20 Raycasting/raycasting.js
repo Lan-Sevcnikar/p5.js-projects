@@ -24,8 +24,8 @@ function projectRay(){
         const dist = player.rays[i].simulate();
         const adjustDist = cos(abs(player.rays[i].a-player.a)) * dist;
         //console.log(adjustDist);
-        const c = map(min(adjustDist,maxDist),40,maxDist,255,0);
-        const h = map(min(adjustDist,maxDist),40,maxDist,screenHeight/2,10); 
+        const c = 2500/adjustDist;
+        const h = 2500/adjustDist;
         const sh = screenHeight/2-h;
         noStroke();
         fill(c);

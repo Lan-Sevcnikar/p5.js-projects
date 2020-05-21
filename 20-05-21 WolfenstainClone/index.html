@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>
+
+		</title>
+	</head>
+	<body>
+		<input type="file" name="LevelLoad" id="inputfile"> 
+		<pre id="output"></pre> <button>Load basic level</button>
+		<link href="main.css" rel="stylesheet" type="text/css"/>
+		
+		<script type="text/javascript"> 
+			document.getElementById('inputfile') 
+				.addEventListener('change', function() { 
+				  
+				var fr=new FileReader(); 
+				fr.onload=function(){ 
+					level = new Level(fr.result);
+				} 
+				  
+				fr.readAsText(this.files[0]);
+			}) 
+		</script>
+		
+
+		<script src="libraries/p5.js" type="text/javascript"></script>
+   	 	<script src="libraries/p5.dom.js" type="text/javascript"></script>
+   	 	<script src="libraries/p5.sound.js" type="text/javascript"></script>
+
+		<script src="sketch.js" type="text/javascript"></script>
+		<script src="ray.js" type="text/javascript"></script>
+		<script src="player.js" type="text/javascript"></script>
+		<script src="shape.js" type="text/javascript"></script>
+		<script src="level.js" type="text/javascript"></script>
+
+     	 <style> body {padding: 20px; margin: 0;} canvas {vertical-align: top;} </style>
+
+
+	</body>
+</html>

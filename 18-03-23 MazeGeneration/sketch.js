@@ -1,5 +1,5 @@
 var rows, cols;
-var w = 20;
+var w = 60;
 
 var curr;
 
