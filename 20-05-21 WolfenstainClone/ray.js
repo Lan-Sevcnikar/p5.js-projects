@@ -29,6 +29,7 @@ class Ray{
 		pos.subtract(new Vector(this.x,this.y));
 		fill(colour_rays);
 		stroke(colour_rays);
+		//console.log(colour_rays)
 		line(screenWidth/4,screenHeight/2,screenWidth/4+pos.x*w,screenHeight/2+pos.y*w);
 		ellipse(screenWidth/4+pos.x*w,screenHeight/2+pos.y*w,6);
 	}

@@ -2,8 +2,9 @@ const colour_background = (51,50,50);
 const colour_lines = (232,233,235);
 const colour_rays = (232,72,85);
 
-const screenWidth = 1100;
-const screenHeight = 900;
+const screenWidth = window.innerWidth;
+const screenHeight = window.innerHeight;
+console.log(screenHeight,screenWidth)
 
 class Point{
 	constructor(x, y){

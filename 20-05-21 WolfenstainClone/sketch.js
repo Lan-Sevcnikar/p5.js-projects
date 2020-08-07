@@ -2,18 +2,19 @@ let colour_background;
 let colour_lines;
 let colour_rays;
 
-const screenWidth = 2400;
-const screenHeight = 900;
+const screenWidth = window.innerWidth + 1;
+const screenHeight = window.innerHeight - 104;
 const resolution = 200;
+const X = window.innerWidth/1600;
 
 let initilized = false;
 var level;
 
 function setup() {
 	createCanvas(screenWidth,screenHeight);
-	colour_background = color(51,50,50);
-	colour_lines = color(232,233,235);
-	colour_rays = color(232,72,85);
+	colour_background = color(39, 39, 39);
+	colour_lines = color(224,224,224);
+	colour_rays = color(255, 101, 37);
 	noFill();
 }
 

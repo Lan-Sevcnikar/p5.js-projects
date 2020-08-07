@@ -37,9 +37,13 @@ class Level{
     }
 
     show(){
+        stroke(224,224,224);
+        fill(37,37,37);
+        rect(0,0,screenWidth,screenHeight);
         this.show_top();
         this.player.update();
         fill(colour_background)
+        stroke(224,224,224);
         rect(screenWidth/2,0,screenWidth/2,screenHeight);
         this.show_players_view();
     }
@@ -71,6 +75,13 @@ class Level{
     }
 
     show_players_view(){
+
+        function limUpDown(maks,minn,value){
+            if(value > maks) return maks;
+            if(value < minn) return minn;
+            return value;
+        }
+
         translate(screenWidth/2,screenHeight/2);
         fill(colour_lines);
         rect(0,0,screenWidth/2,screenHeight/2);
@@ -80,8 +91,11 @@ class Level{
             const dist = ray.simulate();
             const h = this.constant/dist;
             noStroke();
-            fill(map(h,0,200,200,240),map(h,0,200,55,80),map(h,0,200,75,100));
-            rect(i*delta,-h,delta,2*h);
+            var _rgbR = limUpDown(225,255,map(h,0,2000,225,255));
+            var _rgbG = limUpDown(71,101,map(h,0,2000,71,101));
+            var _rgbB = limUpDown(7,37,map(h,0,2000,7,37));
+            fill(255,101,37);
+            rect(i*delta,-h,delta+1,2*h);
         }
         translate(-screenWidth/2,-screenHeight/2);
     }

@@ -1,3 +1,37 @@
+var Wmove = false;
+var Amove = false;
+var Smove = false;
+var Dmove = false;
+
+function Wdown(){
+	Wmove = true;
+}
+function Wup(){
+	Wmove = false;
+}
+
+function Adown(){
+	Amove = true;
+}
+function Aup(){
+	Amove = false;
+}
+
+function Sdown(){
+	Smove = true;
+}
+function Sup(){
+	Smove = false;
+}
+
+function Ddown(){
+	Dmove = true;
+}
+function Dup(){
+	Dmove = false;
+}
+
+
 class Player{
 	constructor(x, y, a){
 		this.x = x;
@@ -28,9 +62,9 @@ class Player{
 		d.rotate(this.a);
 		let x = this.x
 		let y = this.y;
-		if(keyIsDown(UP_ARROW)){
+		if(keyIsDown(UP_ARROW) || Wmove){
 			d = d;
-		}else if(keyIsDown(DOWN_ARROW))  {
+		}else if(keyIsDown(DOWN_ARROW) || Smove)  {
 			d = new Vector(-d.x,-d.y);
 		}else{
 			d = new Vector(0,0);
@@ -70,14 +104,14 @@ class Player{
 	}
 
 	rotate(){
-		if(keyIsDown(LEFT_ARROW)){
+		if(keyIsDown(LEFT_ARROW) || Amove){
 			this.a += this.rv * deltaTime/1000;
 			this.r.forEach(r => {
 				r.a += this.rv * deltaTime/1000;;
 				if(r.a > PI) r.a -= 2*PI;
 				if(r.a < -PI) r.a += 2*PI;
 			});
-		}else if(keyIsDown(RIGHT_ARROW))  {
+		}else if(keyIsDown(RIGHT_ARROW) || Dmove)  {
 			this.a -= this.rv * deltaTime/1000;
 			this.r.forEach(r => {
 				r.a -= this.rv * deltaTime/1000;;
